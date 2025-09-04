@@ -11,6 +11,16 @@ router.get('',(req,res)=>{
 
     res.render('index',{locals});
 });
+ 
+
+
+
+
+
+
+
+
+
 router.get('/about',(req,res)=>{
     res.render('about')
 })
