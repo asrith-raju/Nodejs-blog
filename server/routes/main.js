@@ -20,6 +20,34 @@ const Post = require('../models/post.js')
 //             title:"Discover how to use MongoDb",
 //             body:"Discover how The CRUD operations work"
 //         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
+//         {
+//             title:"Discover how to use MongoDb",
+//             body:"Discover how The CRUD operations work"
+//         },
 //     ])
 // }
 // insertPostdata();
@@ -36,14 +64,14 @@ router.get('',async (req,res)=>{
         description:"Simple Blog Created with NodeJs ,Express & MongoDB"
     }
 
-    let perPage =2;
-    let page = req.query.page || 1;
+    let perPage =7;
+    let page = parseInt(req.query.page)  || 1;
     const data = await Post.aggregate([{ $sort:{ createdAt:-1}}])
     .skip(perPage * page - perPage)
     .limit(perPage)
-    .exec();
+    // .exec();
     
-    const count = Post.countDocuments();
+    const count = await Post.countDocuments();
     const nextPage = parseInt(page) + 1 ;
     const hasNextPage = nextPage <= Math.ceil(count / perPage)
 
@@ -52,7 +80,7 @@ router.get('',async (req,res)=>{
             locals,
             data,
             current:page,
-            nextPage:hasNextPage  ?nextPage:null
+            nextPage:hasNextPage  ? nextPage:null
         });
     } catch (error) {
         console.log(error);
@@ -63,22 +91,22 @@ router.get('',async (req,res)=>{
 });
 
 
-// router.get('',async (req,res)=>{
-//     const locals = {
-//         title : " NodeJs Blog",
-//         description:"Simple Blog Created with NodeJs ,Express & MongoDB"
-//     }
-//     try {
-//          await Post.deleteMany({title:"Discover how to use MongoDb"});
-//         const data = await Post.find();
-//         res.render('index',{locals,data});
-//     } catch (error) {
-//         console.log(error);
+router.get('',async (req,res)=>{
+    const locals = {
+        title : " NodeJs Blog",
+        description:"Simple Blog Created with NodeJs ,Express & MongoDB"
+    }
+    try {
+         await Post.deleteMany();
+        const data = await Post.find();
+        res.render('index',{locals,data});
+    } catch (error) {
+        console.log(error);
         
-//     }
+    }
 
     
-// });
+});
 
 
 router.get('/about',(req,res)=>{
