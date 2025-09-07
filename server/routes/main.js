@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const Post = require('../models/post.js')
+const Post = require('../models/post.js');
+const { get } = require('mongoose');
 //routes
 
 
@@ -91,15 +92,43 @@ router.get('',async (req,res)=>{
 });
 
 
-router.get('',async (req,res)=>{
+// router.get('',async (req,res)=>{
+//     const locals = {
+//         title : " NodeJs Blog",
+//         description:"Simple Blog Created with NodeJs ,Express & MongoDB"
+//     }
+//     try {
+//          await Post.deleteMany();
+//         const data = await Post.find();
+//         res.render('index',{locals,data});
+//     } catch (error) {
+//         console.log(error);
+        
+//     }
+
+    
+// });
+
+
+
+// GET
+// POST :id
+
+router.get('/post/:id',async (req,res)=>{
+    try {
+    let slug = req.params.id;
+    const data = await Post.findById({ _id:slug});
+
     const locals = {
-        title : " NodeJs Blog",
+        title : data.title,
         description:"Simple Blog Created with NodeJs ,Express & MongoDB"
     }
-    try {
-         await Post.deleteMany();
-        const data = await Post.find();
-        res.render('index',{locals,data});
+    
+
+
+
+
+    res.render('post',{locals,data});
     } catch (error) {
         console.log(error);
         
@@ -107,7 +136,6 @@ router.get('',async (req,res)=>{
 
     
 });
-
 
 router.get('/about',(req,res)=>{
     res.render('about')
