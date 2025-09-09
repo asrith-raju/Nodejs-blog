@@ -252,7 +252,7 @@ h3 {font-size: var(--font-size-md);}
 }
 .searchBar.open{
     transform: translateY(0);
-    transition: transform 0.1s;
+    transition: transform 0.5s;
 }
 .searchBar input{
     margin: 0;
