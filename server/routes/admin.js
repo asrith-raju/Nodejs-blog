@@ -7,6 +7,27 @@ const jwt = require('jsonwebtoken')
 
 const adminLayout = '../views/layouts/admin'
 jwtSecret= process.env.JWT_SECRET;
+
+// CHECK - LOGIN
+const authMiddleware = (req,res,next)=>{
+    const token = req.cookies.token;
+    if(!token){
+        return res.status(401).json({message:'Unauthorized'})
+    }
+    try{
+        const decoded = jwt.verify(token,jwtSecret);
+        req.userId = decoded.userId;
+        next();
+    }
+    catch(error){
+          return res.status(401).json({message:'Unauthorized'})
+    }
+}
+
+
+
+
+
 // GET 
 // Admin-LOGIN PAGE 
 
@@ -56,15 +77,66 @@ router.post('/admin',async (req,res)=>{
     }
 });
 
-// POSt
-// Admin- Check LOGIN PAGE 
+// Get
+// Admin-Dashboard
 
 
-router.get('/dashboard',async (req,res)=>{
+router.get('/dashboard', authMiddleware , async (req,res)=>{
 
-    res.render('admin/dashboard');
+    try {
+     const locals = {
+            title : "Admin",
+            description:"Simple Blog Created with NodeJs ,Express & MongoDB"
+        }
+
+
+        const data = await Post.find();
+        res.render('admin/dashboard',{
+            locals,
+            data,
+            layout : adminLayout
+        });
+      
+    } catch (error) {
+        console.log(error);
+        
+    }
+
+
 
 });
+
+// Get
+// Admin-Create New Post
+
+router.get('/add-post', authMiddleware , async (req,res)=>{
+
+    try {
+     const locals = {
+            title : "Add Post",
+            description:"Simple Blog Created with NodeJs ,Express & MongoDB"
+        }
+
+        const data = await Post.find();
+        res.render('admin/add-post',{
+            locals,
+            layout : adminLayout
+        });
+      
+    } catch (error) {
+        console.log(error);
+        
+    }
+});
+
+
+
+
+
+
+
+
+
 // POST
 // Admin - Register
 
