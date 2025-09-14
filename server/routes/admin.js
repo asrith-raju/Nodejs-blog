@@ -247,6 +247,6 @@ router.post('/register', async (req, res) => {
 router.get('/logout',(req,res)=>{
     res.clearCookie('token')
     // res.json({message: 'Logout Successful'})
-    res.redirect('/admin')
+    res.redirect('/')
 })
 module.exports = router;
