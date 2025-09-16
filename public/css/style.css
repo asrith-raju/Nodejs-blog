@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root{
-    --black:#1c1c1c;
+    --text-color: black;
+    --bg-color: white;
     --grey:#7e7e7e;
     --light-grey:#e4e4e4;
     --red:#b30000;
@@ -15,9 +16,9 @@
 
 body{
     font-family: 'poppins',sans-serif;
-    color: var(--black);
+    color: var(--bg-color);
     font-size: var(--font-size-base);
-    background-color: #faf5ee;
+    background-color: var(--bg-color);
     background-image: url("/images/img-noise.png");
     margin: 0;
 }
@@ -40,7 +41,7 @@ textarea{
 }
 
 .btn{
-     background-color: var(--black);
+     background-color: var(--bg-color);
      border: none;
      color: white;
      padding: 16px 32px;
@@ -73,7 +74,11 @@ img{
     overflow: hidden;
     border-radius: var(--border-radius);
 }
-a{color: var(--black);}
+a{color: var(--text-color);}
+
+h1, h2, h3, h4, h5, h6, p, a{
+    color: var(--text-color);
+}
 
 h1 {font-size: var(--font-size-xl);}
 h2 {font-size: var(--font-size-lg);}
@@ -131,20 +136,20 @@ h3 {font-size: var(--font-size-md);}
     border: 2px solid transparent;
     font-weight: 600;
     font-size: var(--font-size-base);
-    color: var(--black);
+    color: var(--text-color);
 }
 
 .header__button button:hover{
-    border: 2px solid var(--black);
+    border: 2px solid var(--text-color);
 }
-.darktheme{
+.darktheme,.lightTheme,.themes{
     height: 35px;
     width: 35px;
 }
-.lightTheme{
-    height: 35px;
-    width: 35px;
+.light-text{
+    color:#ffffff;
 }
+
 
 /* Header-->navigation */
 .header__nav ul{
@@ -242,7 +247,7 @@ h3 {font-size: var(--font-size-md);}
     display: inline-block;
 }
 .pagination:hover{
-   color: var(--black);
+   color: var(--bg-color);
 }
 .article{
     white-space: pre-wrap;
@@ -257,7 +262,7 @@ h3 {font-size: var(--font-size-md);}
     visibility: hidden;
 
     transform: translateY(-100px);
-    background-color: var(--black);
+    background-color: var(--bg-color);
     padding: 4px 0;
     position: absolute;
     left: 0;
@@ -297,7 +302,7 @@ h3 {font-size: var(--font-size-md);}
 
 .admin-post-controls .btn  {
   display: inline-block;
-  background-color: var(--black);
+  background-color: var(--bg-color);
   color: var(--gray-light);
   border: 0;
   text-decoration: none;
