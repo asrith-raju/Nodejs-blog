@@ -27,6 +27,26 @@ const authMiddleware = (req, res, next) => {
 
 
 
+// Middleware: Redirect logged-in users away from login/register
+// const redirectIfAuth = (req, res, next) => {
+//   const token = req.cookies.token;
+
+//   if (token) {
+//     try {
+//       jwt.verify(token, jwtSecret);  // check if token is valid
+//       return res.redirect('/dashboard'); // already logged in → go to dashboard
+//     } catch (err) {
+//       return next(); // invalid token → allow access to login/register
+//     }
+//   }
+
+//   next(); // no token → continue normally
+// };
+
+
+
+
+
 
 
 // GET 
@@ -141,9 +161,11 @@ router.post('/add-post', authMiddleware, async (req, res) => {
         try {
             const newPost = new Post({
                 title: req.body.title,
-                body: req.body.body
+                body: req.body.body,
+                user:req.userId
             })
             await Post.create(newPost)
+            await newPost.save()
             res.redirect('/dashboard');
 
         } catch (error) {
@@ -215,6 +237,27 @@ router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
 
 });
 
+// GET - Register Page
+// router.get('/register', redirectIfAuth, (req, res) => {
+//   try {
+//     const locals = {
+//       title: "Register",
+//       description: "Create your account"
+//     };
+
+//     res.render('auth/register', { 
+//       locals, 
+//       layout: adminLayout 
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Error loading register page");
+//   }
+// });
+
+
+
+
 
 // POST
 // Admin - Register
@@ -228,6 +271,7 @@ router.post('/register', async (req, res) => {
         try {
             const user = await User.create({ username, password: hashedPassword });
             res.status(201).json({ message: 'user created', user })
+            res.redirect('/login')
         } catch (error) {
             if (error.code === 11000) {
                 res.status(409).json({ message: 'user already in use' })
@@ -240,6 +284,69 @@ router.post('/register', async (req, res) => {
 
     }
 });
+
+
+
+// POST - Register new user
+
+
+
+
+
+
+
+
+
+// GET - Login Page
+// router.get('/login', redirectIfAuth, (req, res) => {
+//   try {
+//     const locals = {
+//       title: "Login",
+//       description: "Access your account"
+//     };
+
+//     res.render('auth/login', { 
+//       locals, 
+//       layout: adminLayout 
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Error loading login page");
+//   }
+// });
+
+
+// POST - Handle Login
+// router.post('/login', async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+
+//     // Check if user exists
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//       return res.status(401).send("Invalid credentials");
+//     }
+
+//     // Compare password
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
+//     if (!isPasswordValid) {
+//       return res.status(401).send("Invalid credentials");
+//     }
+
+//     // Create JWT
+//     const token = jwt.sign({ userId: user._id }, jwtSecret);
+
+//     // Set cookie
+//     res.cookie('token', token, { httpOnly: true });
+
+//     // Redirect to dashboard
+//     res.redirect('/dashboard');
+
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Error logging in");
+//   }
+// });
 
 
 // Get 

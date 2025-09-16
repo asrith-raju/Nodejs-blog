@@ -18,3 +18,16 @@ document.addEventListener('DOMContentLoaded',function(){
         })
     }
 })
+const darktheme = document.getElementById('dark')
+const light = document.getElementById('light')
+const temp=true
+darktheme.addEventListener('click',()=>{
+    if(temp){
+        document.body.style.background = "black"
+        document.body.style.color="white"
+        document.light.classList.remove('hide')
+        document.darktheme.classList.add('hide')
+        temp=false
+    }
+
+})

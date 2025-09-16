@@ -35,6 +35,9 @@ textarea{
     padding: 0.7rem 0.75rem;
     margin-bottom: 1rem ;
 }
+.hide{
+    display: none;
+}
 
 .btn{
      background-color: var(--black);
@@ -114,6 +117,7 @@ h3 {font-size: var(--font-size-md);}
     grid-area: button;
     display: flex;
     justify-content:end;
+    gap: 0.5rem;
 }
  
 .header__button button{
@@ -132,6 +136,14 @@ h3 {font-size: var(--font-size-md);}
 
 .header__button button:hover{
     border: 2px solid var(--black);
+}
+.darktheme{
+    height: 35px;
+    width: 35px;
+}
+.lightTheme{
+    height: 35px;
+    width: 35px;
 }
 
 /* Header-->navigation */
@@ -217,7 +229,7 @@ h3 {font-size: var(--font-size-md);}
     filter: none;
 }
 .article-ul:hover li{
-    filter: blur(3px);
+    /* filter: blur(3px); */
 }
 .article-ul:hover li:hover{
     filter: none;
