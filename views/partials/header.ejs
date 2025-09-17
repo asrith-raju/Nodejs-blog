@@ -12,7 +12,11 @@
                  <a href="/contact" class="<%= isActive('/contact',currentRoute) %>">Contact</a>
             </li>
             <li>
-                 <a href="/dashboard" %>">Dashboard</a>
+                <% if (user) { %>
+                    <a href="/dashboard" %>">Dashboard</a>
+                <% } else{ %>
+                    <a href="/admin" %>">Login</a>
+                <% } %>
             </li>
         </ul>
     </nav>

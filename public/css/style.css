@@ -41,7 +41,7 @@ textarea{
 }
 
 .btn{
-     background-color: var(--bg-color);
+     background-color: var(--text-color);
      border: none;
      color: white;
      padding: 16px 32px;
@@ -76,7 +76,7 @@ img{
 }
 a{color: var(--text-color);}
 
-h1, h2, h3, h4, h5, h6, p, a{
+h1, h2, h3, h4, h5, h6, p, a, label{
     color: var(--text-color);
 }
 
@@ -302,7 +302,7 @@ h3 {font-size: var(--font-size-md);}
 
 .admin-post-controls .btn  {
   display: inline-block;
-  background-color: var(--bg-color);
+  background-color: var(--text-color);
   color: var(--gray-light);
   border: 0;
   text-decoration: none;
@@ -316,3 +316,6 @@ h3 {font-size: var(--font-size-md);}
   justify-content: space-between;
   padding: 10px 0;
 }
+.files{
+    color: var(--text-color);
+ }

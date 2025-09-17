@@ -33,6 +33,11 @@ app.use(session({
 }))
 app.use(express.static('public'));
 
+app.use((req, res, next) =>{
+    res.locals.user = req.cookies.token;
+    next()
+})
+
 //Templating Engine
 app.use(expressLayout);
 app.set('layout','./layouts/main')
