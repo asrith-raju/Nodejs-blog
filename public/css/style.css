@@ -190,17 +190,30 @@ h3 {font-size: var(--font-size-md);}
     font-size: 1.7rem;
 }
 
-.article-ul{
- list-style-type: none;
+.article-section{
+ /* list-style-type: none;
  padding: 0;
  margin: 0;
  font-size: clamp(1.13rem, calc(1.08rem + 0.22vw),1.25rem);
  display: flex;
- flex-direction: column;
+ flex-direction: column; */
+ width: 100%;
+ padding: 20px 20px;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 1rem;
+}
+.article-section div{
+    height: 250px;
+    width: 150px;
+    background-color:var(--light-grey);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 .article-list__date{
    font-size: 1rem;
-   color: var(--grey);
+   color: var(--text-color);
    width: 100px;
    display: inline-block;
    width: 260px;
