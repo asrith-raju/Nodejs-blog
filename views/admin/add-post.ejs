@@ -9,7 +9,15 @@
   <input type="text" placeholder="Post Title" name="title">
   <label for="body"><b>Content</b></label>
   <textarea name="body" cols="50" rows="10"></textarea>
+<h3>Select Category Image</h3>
+  <div class="categories">
+    <% images.forEach(image => { %>
+  <div class="category">
+    <img src="/images/categories/<%= image %>" class="cateimg"  alt="category">
+  </div>
+<% }) %>
 
+  </div>
+  
   <input type="submit" value="Add" class="btn">
-  <input type="file" value="Add" class="files">
 </form>

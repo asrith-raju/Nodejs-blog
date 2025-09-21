@@ -6,6 +6,7 @@ const methodOverRide = require('method-override')
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')
 const session = require('express-session')
+const path = require('path')
 
 const connectDB = require('./server/config/db.js')
 const {isActive} = require('./server/helpers/route-helpers.js')
@@ -20,6 +21,8 @@ app.use(express.urlencoded({ extended : true }));
 app.use(express.json());
 app.use(cookieParser())
 app.use(methodOverRide('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(session({
     secret : 'keyboard cat',

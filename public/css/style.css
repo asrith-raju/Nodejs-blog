@@ -296,6 +296,7 @@ h3 {font-size: var(--font-size-md);}
 .footer{
     margin: 4rem;
     text-align: center;
+    color: var(--text-color);
 }
 /* Search Bar */
 .searchBar{
@@ -358,4 +359,13 @@ h3 {font-size: var(--font-size-md);}
 }
 .files{
     color: var(--text-color);
+ }
+ .cateimg{
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+ }
+ .categories{
+    display: flex;
+    gap: 5px;
  }

@@ -4,7 +4,11 @@ const Post = require('../models/post.js');
 const User = require('../models/User.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { route } = require('./admin.js');
+// const { route } = require('./admin.js');
+const multer = require('multer')
+const fs = require("fs");
+const path = require("path");
+
 
 const adminLayout = '../views/layouts/admin'
 jwtSecret = process.env.JWT_SECRET;
@@ -25,27 +29,19 @@ const authMiddleware = (req, res, next) => {
     }
 }
 
+//Multer Setup 
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "../../public/images/categories"); // save files in public/images
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+        // e.g. 1695123456789.jpg
+    }
+});
 
-// Middleware: Redirect logged-in users away from login/register
-// const redirectIfAuth = (req, res, next) => {
-//   const token = req.cookies.token;
-
-//   if (token) {
-//     try {
-//       jwt.verify(token, jwtSecret);  // check if token is valid
-//       return res.redirect('/dashboard'); // already logged in → go to dashboard
-//     } catch (err) {
-//       return next(); // invalid token → allow access to login/register
-//     }
-//   }
-
-//   next(); // no token → continue normally
-// };
-
-
-
-
+const upload = multer({ storage: storage });
 
 
 
@@ -130,7 +126,7 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
 // Admin-Create New Post
 
 router.get('/add-post', authMiddleware, async (req, res) => {
-
+    const categoriesDir = path.join(__dirname, "../../public/images/categories");
     try {
         const locals = {
             title: "Add Post",
@@ -138,9 +134,24 @@ router.get('/add-post', authMiddleware, async (req, res) => {
         }
 
         const data = await Post.find();
-        res.render('admin/add-post', {
+        
+        fs.readdir(categoriesDir, (err, files) => {
+            if (err) {
+                console.error("Error reading categories folder:", err);
+                return res.status(500).send("Error loading categories");
+            }
+
+            // Filter only image files (optional)
+            const images = files.filter(file =>
+                /\.(png|jpe?g|gif|webp)$/i.test(file)
+            );
+
+            res.render('admin/add-post', {
             locals,
-            layout: adminLayout
+            layout: adminLayout,
+            images,
+            data
+        });
         });
 
     } catch (error) {
@@ -153,16 +164,19 @@ router.get('/add-post', authMiddleware, async (req, res) => {
 // Get
 // Admin-Create New Post
 
-router.post('/add-post', authMiddleware, async (req, res) => {
+router.post('/add-post', authMiddleware, upload.single('image'), async (req, res) => {
 
     try {
         console.log(req.body);
+        console.log(req.file)
 
         try {
             const newPost = new Post({
                 title: req.body.title,
                 body: req.body.body,
-                user:req.userId
+                image: req.body.categoryImage || null,
+                user: req.userId
+
             })
             await Post.create(newPost)
             await newPost.save()
@@ -178,6 +192,9 @@ router.post('/add-post', authMiddleware, async (req, res) => {
 
     }
 });
+
+
+
 
 // GET
 // Admin-Create New Post
@@ -228,32 +245,14 @@ router.put('/edit-post/:id', authMiddleware, async (req, res) => {
 // DELETE
 // Admin-Delete Post
 router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
-   try {
-    await Post.deleteOne({ _id:req.params.id})
-    res.redirect('/dashboard')
-   } catch (error) {
-    console.log(error);
-   }
+    try {
+        await Post.deleteOne({ _id: req.params.id })
+        res.redirect('/dashboard')
+    } catch (error) {
+        console.log(error);
+    }
 
 });
-
-// GET - Register Page
-// router.get('/register', redirectIfAuth, (req, res) => {
-//   try {
-//     const locals = {
-//       title: "Register",
-//       description: "Create your account"
-//     };
-
-//     res.render('auth/register', { 
-//       locals, 
-//       layout: adminLayout 
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("Error loading register page");
-//   }
-// });
 
 
 
@@ -287,71 +286,9 @@ router.post('/register', async (req, res) => {
 
 
 
-// POST - Register new user
-
-
-
-
-
-
-
-
-
-// GET - Login Page
-// router.get('/login', redirectIfAuth, (req, res) => {
-//   try {
-//     const locals = {
-//       title: "Login",
-//       description: "Access your account"
-//     };
-
-//     res.render('auth/login', { 
-//       locals, 
-//       layout: adminLayout 
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("Error loading login page");
-//   }
-// });
-
-
-// POST - Handle Login
-// router.post('/login', async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-
-//     // Check if user exists
-//     const user = await User.findOne({ username });
-//     if (!user) {
-//       return res.status(401).send("Invalid credentials");
-//     }
-
-//     // Compare password
-//     const isPasswordValid = await bcrypt.compare(password, user.password);
-//     if (!isPasswordValid) {
-//       return res.status(401).send("Invalid credentials");
-//     }
-
-//     // Create JWT
-//     const token = jwt.sign({ userId: user._id }, jwtSecret);
-
-//     // Set cookie
-//     res.cookie('token', token, { httpOnly: true });
-
-//     // Redirect to dashboard
-//     res.redirect('/dashboard');
-
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("Error logging in");
-//   }
-// });
-
-
 // Get 
 // // Admin-Logout
-router.get('/logout',(req,res)=>{
+router.get('/logout', (req, res) => {
     res.clearCookie('token')
     // res.json({message: 'Logout Successful'})
     res.redirect('/')
