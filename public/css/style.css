@@ -360,12 +360,20 @@ h3 {font-size: var(--font-size-md);}
 .files{
     color: var(--text-color);
  }
+ .categories{
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+ }
+ 
  .cateimg{
     width: 150px;
     height: 150px;
     border-radius: 5px;
+    transition: 1s ease;
  }
- .categories{
-    display: flex;
-    gap: 5px;
+ .cateimg:hover{
+    transform: scale(1.2);
  }
+ 
