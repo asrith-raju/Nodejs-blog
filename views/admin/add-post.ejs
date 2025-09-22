@@ -14,6 +14,8 @@
     <% images.forEach(image => { %>
   <div class="category">
     <img src="/images/categories/<%= image %>" class="cateimg"  alt="category">
+    <p class="imagetext">+</p>
+       <input type="radio" name="categoryImage" value="/images/categories/<%= image %>" hidden>
   </div>
 <% }) %>
 
@@ -21,3 +23,16 @@
   
   <input type="submit" value="Add" class="btn">
 </form>
+<script>
+  const categories = document.querySelectorAll('.category');
+
+  categories.forEach(category => {
+    const radio = category.querySelector('input[type="radio"]');
+    category.addEventListener('click', () => {
+      categories.forEach(c => c.querySelector('input[type="radio"]').checked = false);
+      categories.forEach(c => c.classList.remove('selected'));
+      radio.checked = true;
+      category.classList.add('selected');
+    });
+  });
+</script>

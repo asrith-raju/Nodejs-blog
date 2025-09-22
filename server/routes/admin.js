@@ -5,7 +5,6 @@ const User = require('../models/User.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 // const { route } = require('./admin.js');
-const multer = require('multer')
 const fs = require("fs");
 const path = require("path");
 
@@ -30,18 +29,6 @@ const authMiddleware = (req, res, next) => {
 }
 
 //Multer Setup 
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "../../public/images/categories"); // save files in public/images
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-        // e.g. 1695123456789.jpg
-    }
-});
-
-const upload = multer({ storage: storage });
 
 
 
@@ -164,17 +151,18 @@ router.get('/add-post', authMiddleware, async (req, res) => {
 // Get
 // Admin-Create New Post
 
-router.post('/add-post', authMiddleware, upload.single('image'), async (req, res) => {
+router.post('/add-post', authMiddleware, async (req, res) => {
 
     try {
         console.log(req.body);
         console.log(req.file)
 
         try {
+            const { title, body, categoryImage } = req.body;
             const newPost = new Post({
-                title: req.body.title,
-                body: req.body.body,
-                image: req.body.categoryImage || null,
+                title,
+                body,
+                image:categoryImage || null,
                 user: req.userId
 
             })

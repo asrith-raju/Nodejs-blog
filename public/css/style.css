@@ -201,30 +201,52 @@ h3 {font-size: var(--font-size-md);}
   justify-items: center;
   padding: 0 20px;
 }
+.post_title,.post_body{
+    color: var(--bg-color);
+}
 .article-section div{
+    position: relative;
     height: 250px;
     width: 90%;
-     /* max-width: 60%; */
     background-color:var(--light-grey);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     text-align: center;
+    overflow: hidden;
 }
 .article-list__date{
    font-size: 1rem;
-   color: var(--text-color);
-   width: 100px;
+   color: var(--bg-color);
    display: inline-block;
    width: 100%;
+   bottom: 0;
+   left: 10%;
+   z-index: 3;
 }   
-.article-ul li a{
+.article-section a{
+    height:100%;
+    position: absolute;
     display: flex;
-    /* flex-direction: column; */
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     text-decoration: none;
+    color: var(--bg-color);
+    gap: 0.7rem;
+    z-index: 2;
 }
+
+.home__images{
+    height:100%;
+    width:100%;
+    position: relative;
+    background-repeat: no-repeat;
+    
+    filter: blur(2px);
+    z-index: 1;
+ }
+ 
 @media only screen and (min-width: 400px) and (max-width: 579px) {
   .article-section {
     display: grid;
@@ -291,6 +313,7 @@ h3 {font-size: var(--font-size-md);}
 }
 .article{
     white-space: pre-wrap;
+    color: var(--text-color);
 }
 /* footer */
 .footer{
@@ -366,14 +389,36 @@ h3 {font-size: var(--font-size-md);}
     flex-wrap: wrap;
     justify-content: center;
  }
- 
- .cateimg{
+ .category{
     width: 150px;
     height: 150px;
+    position: relative;
+    transition: 0.5s ease;
+    overflow: hidden;
     border-radius: 5px;
-    transition: 1s ease;
  }
- .cateimg:hover{
-    transform: scale(1.2);
+ .category .imagetext {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    color: var(--text-color);
+    font-size: 50px;
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+    pointer-events: none; 
+    background-color:rgba(128, 128, 128, 0.247);
+    height: 150px;
+    width: 150px;
+}
+.category:hover .imagetext {
+    opacity: 1;
+}
+ .category:hover{
+    transform: scale(1.025);
+    opacity: 1;
  }
  
