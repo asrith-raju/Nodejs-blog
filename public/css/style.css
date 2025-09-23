@@ -214,14 +214,18 @@ h3 {font-size: var(--font-size-md);}
 .article-section div{
     position: relative;
     height: 250px;
-    width: 90%;
+    width: 70%;
+    max-width: 300px;
     background-color:var(--light-grey);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     overflow: hidden;
+
 }
 .article-list__date{
    font-size: 1rem;
@@ -242,6 +246,7 @@ h3 {font-size: var(--font-size-md);}
     color: var(--bg-color);
     gap: 0.7rem;
     z-index: 2;
+    padding: 20px;
 }
 
 .home__images{
@@ -249,7 +254,6 @@ h3 {font-size: var(--font-size-md);}
     width:100%;
     position: relative;
     background-repeat: no-repeat;
-    
     filter: blur(2px);
     z-index: 1;
  }
@@ -289,7 +293,7 @@ h3 {font-size: var(--font-size-md);}
         justify-items: center;
     }
     .article-section div{
-        max-width:70% ;
+        max-width:320px;
         
     }
 }
