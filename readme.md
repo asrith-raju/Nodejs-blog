@@ -97,7 +97,8 @@ It allows users to register, log in, create posts, edit posts, and view blogs. A
 - Login at `/login`  
 - Admin users can access `/dashboard`  
 - Create or manage blog posts through the dashboard  
-- Public users can read posts and search for content  
+- Public users can read posts and search for content
+- Users can add background images for their posts
 ---
 
 ## 🖊️ License  
