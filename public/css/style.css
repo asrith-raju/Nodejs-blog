@@ -202,7 +202,7 @@ h3 {font-size: var(--font-size-md);}
   padding: 0 20px;
 }
 .post_title,.post_body{
-    color: var(--bg-color);
+    color: #ffffff;
 }
 .post_body{
     display:-webkit-box;
@@ -217,6 +217,7 @@ h3 {font-size: var(--font-size-md);}
     width: 70%;
     max-width: 300px;
     background-color:var(--light-grey);
+    color: #ffffff;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -225,11 +226,12 @@ h3 {font-size: var(--font-size-md);}
     align-items: center;
     text-align: center;
     overflow: hidden;
+    box-shadow: 0 0 20px white;
 
 }
 .article-list__date{
    font-size: 1rem;
-   color: var(--bg-color);
+   color: #ffffff;
    display: inline-block;
    width: 100%;
    bottom: 0;
@@ -243,7 +245,7 @@ h3 {font-size: var(--font-size-md);}
     flex-direction: column;
     justify-content: center;
     text-decoration: none;
-    color: var(--bg-color);
+    color: #ffffff;
     gap: 0.7rem;
     z-index: 2;
     padding: 20px;
